@@ -12,6 +12,12 @@ console.log(process.env.DB_URI);
 
 dbConnect();
 
+
+const corsOptions = {
+  origin: '*', // Allow all origins
+  optionsSuccessStatus: 200
+};
+
 // Update CORS configuration to allow requests from any origin
 app.use(cors());
 app.options("*", cors());
