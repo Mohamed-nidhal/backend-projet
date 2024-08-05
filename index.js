@@ -13,8 +13,17 @@ console.log(process.env.DB_URI);
 
 dbConnect();
 
-app.use(cors());
-app.options("*", cors());
+const corsOptions = {
+  origin: '*', // Allow all origins
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true, // If you need to send cookies or authentication headers
+};
+
+app.use(cors(corsOptions)); 
+app.options('*', cors(corsOptions)); 
+
+// app.use(cors());
+// app.options("*", cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
