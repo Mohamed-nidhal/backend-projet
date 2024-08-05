@@ -16,15 +16,23 @@ router.get("/", async (req, res) => {
 
 // Create a new answer document
 router.post("/", async (req, res) => {
-    try {
-        const newAnswer = new AnswerModel(req.body);
-        await newAnswer.save();
-        res.status(201).json();
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ message: "Error creating answer" });
-    }
+  try {
+      // Transform the incoming data
+      const transformedData = Object.entries(req.body).map(([name, answer]) => ({ name, answer })); 
+
+      // Create the dataArray object as expected by the schema
+      const dataArray = { dataArray: transformedData }; 
+console.log(transformedData)
+console.log(dataArray)
+      const newAnswer = new AnswerModel(dataArray);
+      await newAnswer.save();
+      res.status(201).json({ data: newAnswer });
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: "Error creating answer" });
+  }
 });
+
 
 
 
