@@ -4,6 +4,7 @@ import cors from "cors";
 
 import dbConnect from "./dbConnect.js";
 import questionRoute from "./questionRoute.js";
+import answerRoute from "./answerRoute.js";
 
 dotenv.config();
 const app = express();
@@ -23,6 +24,10 @@ app.use("/question",(req, res, next)=>{
   console.log(req.body);
   next();
 }, questionRoute);
+app.use("/answer",(req, res, next)=>{
+  console.log(req.body);
+  next();
+},answerRoute);
 
 app.get("/", (req, res) => {
   const name = process.env.NAME || "World";
