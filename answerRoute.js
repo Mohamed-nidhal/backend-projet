@@ -19,7 +19,7 @@ router.post("/", async (req, res) => {
     try {
         const newAnswer = new AnswerModel(req.body);
         await newAnswer.save();
-        res.status(201).json({ data: new Answer });
+        res.status(201).json();
     } catch (error) {
         console.error(error);
         res.status(500).json({ message: "Error creating answer" });
