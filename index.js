@@ -1,6 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
+
 import dbConnect from "./dbConnect.js";
 import questionRoute from "./questionRoute.js";
 
@@ -12,20 +13,20 @@ console.log(process.env.DB_URI);
 
 dbConnect();
 
-
-const corsOptions = {
-  origin: '*', // Allow all origins
-  optionsSuccessStatus: 200
-};
-
-// Update CORS configuration to allow requests from any origin
 app.use(cors());
-app.options("*", cors());
+
+// Or allow specific origins
+app.use(cors({
+  origin: 'https://9000-idx-projet-1722864863490.cluster-rz2e7e5f5ff7owzufqhsecxujc.cloudworkstations.dev'
+}));
+
+// app.use(cors());
+// app.options("*", cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/question", (req, res, next) => {
+app.use("/question",(req, res, next)=>{
   console.log(req.body);
   next();
 }, questionRoute);
