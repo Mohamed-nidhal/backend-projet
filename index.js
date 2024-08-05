@@ -19,7 +19,10 @@ app.options("*", cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/question", questionRoute);
+app.use("/question",(req, res, next)=>{
+  console.log(req.body);
+  next();
+}, questionRoute);
 
 app.get("/", (req, res) => {
   const name = process.env.NAME || "World";
