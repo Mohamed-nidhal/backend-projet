@@ -13,11 +13,7 @@ const questionSchema = new Schema(
       enum: ["text", "number", "email", "textArea", "checkbox", "radio"],
     },
     options: [
-      {
-        name: {
-          type: String,
-        },
-      },
+      {type: String,}
     ],
   },
   { timestamps: true }
