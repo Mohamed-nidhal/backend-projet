@@ -14,14 +14,7 @@ console.log(process.env.DB_URI);
 dbConnect();
 
 app.use(cors());
-
-// Or allow specific origins
-app.use(cors({
-  origin: 'https://9000-idx-projet-1722864863490.cluster-rz2e7e5f5ff7owzufqhsecxujc.cloudworkstations.dev'
-}));
-
-// app.use(cors());
-// app.options("*", cors());
+app.options("*", cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

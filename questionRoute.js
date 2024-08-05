@@ -9,13 +9,19 @@ router
 
   .post(
     (async (req, res) => {
+      try{
       const { title, type, options } = req.body;
-
+      console.log(title )
+      console.log(type)
+      console.log(options )
       const question = await Question.create({ title, type, options });
       if (!question) {
         res.status(400).json({ message: "error" });
       }
       res.status(201).json({ data: question });
+    }catch(error){
+      res.status(400).json({ message: error });
+    }
     })
   )
   .get(
