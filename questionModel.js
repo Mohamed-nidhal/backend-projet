@@ -13,8 +13,12 @@ const questionSchema = new Schema(
       enum: ["text", "number", "email", "textArea", "checkbox", "radio"],
     },
     options: [
-      {type: String,}
+      { type: String }
     ],
+    mandatory: { // Ajout du champ pour les questions obligatoires
+      type: Boolean,
+      default: false, // Par défaut, une question n'est pas obligatoire
+    },
   },
   { timestamps: true }
 );
