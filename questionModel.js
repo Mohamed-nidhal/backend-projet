@@ -14,12 +14,10 @@ const questionSchema = new Schema(
       type: String,
       enum: ["text", "number", "email", "textArea", "checkbox", "radio"],
     },
-    options: [
-      { type: String }
-    ],
+    options: [String],
     mandatory: {
       type: Boolean,
-      default: false,  // Default to false
+      default: false,
     },
   },
   { timestamps: true }
