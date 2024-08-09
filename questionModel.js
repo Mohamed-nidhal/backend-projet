@@ -1,4 +1,4 @@
-import mongoose, { Schema, Document } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
 const questionSchema = new Schema(
   {
@@ -15,9 +15,9 @@ const questionSchema = new Schema(
     options: [
       { type: String }
     ],
-    mandatory: { // Ajout du champ pour les questions obligatoires
+    mandatory: {
       type: Boolean,
-      default: false, // Par défaut, une question n'est pas obligatoire
+      default: false,
     },
   },
   { timestamps: true }

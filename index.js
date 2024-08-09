@@ -20,14 +20,14 @@ app.options("*", cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use("/question",(req, res, next)=>{
+app.use("/question", (req, res, next) => {
   console.log(req.body);
   next();
 }, questionRoute);
-app.use("/answer",(req, res, next)=>{
+app.use("/answer", (req, res, next) => {
   console.log(req.body);
   next();
-},answerRoute);
+}, answerRoute);
 
 app.get("/", (req, res) => {
   const name = process.env.NAME || "World";
