@@ -1,4 +1,6 @@
-import mongoose, { Schema, Document } from "mongoose";
+// questionModel.js
+
+import mongoose, { Schema } from "mongoose";
 
 const questionSchema = new Schema(
   {
@@ -13,8 +15,12 @@ const questionSchema = new Schema(
       enum: ["text", "number", "email", "textArea", "checkbox", "radio"],
     },
     options: [
-      {type: String,}
+      { type: String }
     ],
+    mandatory: {
+      type: Boolean,
+      default: false,  // Default to false
+    },
   },
   { timestamps: true }
 );
