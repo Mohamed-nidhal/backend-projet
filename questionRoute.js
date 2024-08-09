@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+// questionRoute.js
 import express from "express";
 import Question from "./questionModel.js";
 
@@ -20,8 +20,12 @@ router
         return res.status(400).json({ message: "Les options sont requises pour ce type de question" });
       }
 
+      // Trouver le dernier ID utilisé et incrémenter de 1
+      const lastQuestion = await Question.findOne().sort({ id: -1 }).exec();
+      const newId = lastQuestion ? lastQuestion.id + 1 : 0;
+
       // Préparation des données de la question
-      const questionData = { title, type, options, mandatory };
+      const questionData = { id: newId, title, type, options, mandatory };
 
       if (dependentOn) {
         // Vérifier si l'ID de la question dépendante est valide
