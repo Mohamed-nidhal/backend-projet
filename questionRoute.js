@@ -1,37 +1,38 @@
 import express from "express";
-
 import Question from "./questionModel.js";
 
 const router = express.Router();
 
 router
   .route("/")
+  .post(async (req, res) => {
+    try {
+      const { title, type, options, mandatory } = req.body;
+      
+      // Validate mandatory field
+      if (typeof mandatory !== 'boolean') {
+        return res.status(400).json({ message: "Invalid mandatory field" });
+      }
 
-  .post(
-    (async (req, res) => {
-      try{
-      const { title, type, options } = req.body;
-      console.log(title )
-      console.log(type)
-      console.log(options )
-      const question = await Question.create({ title, type, options });
+      const question = await Question.create({ title, type, options, mandatory });
       if (!question) {
-        res.status(400).json({ message: "error" });
+        return res.status(400).json({ message: "Error creating question" });
       }
       res.status(201).json({ data: question });
-    }catch(error){
-      res.status(400).json({ message: error });
+    } catch (error) {
+      res.status(400).json({ message: error.message });
     }
-    })
-  )
-  .get(
-    (async (req, res) => {
-        const questions = await Question.find({});
+  })
+  .get(async (req, res) => {
+    try {
+      const questions = await Question.find({});
       if (!questions) {
-        res.status(400).json({ message: "error" });
+        return res.status(404).json({ message: "No questions found" });
       }
-      res.status(201).json({ data: questions });
+      res.status(200).json({ data: questions });
+    } catch (error) {
+      res.status(400).json({ message: error.message });
     }
-  ));
+  });
 
 export default router;
