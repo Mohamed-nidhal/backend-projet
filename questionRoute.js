@@ -1,4 +1,3 @@
-// questionRoute.js
 import express from "express";
 import Question from "./questionModel.js";
 
@@ -43,9 +42,6 @@ router
 
       // Création de la question
       const question = await Question.create(questionData);
-      if (!question) {
-        return res.status(400).json({ message: "Erreur lors de la création de la question" });
-      }
       res.status(201).json({ data: question });
     } catch (error) {
       console.error("Erreur lors de l'ajout de la question:", error);

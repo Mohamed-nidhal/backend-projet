@@ -1,4 +1,3 @@
-// questionModel.js
 import mongoose, { Schema } from "mongoose";
 
 const questionSchema = new Schema(
