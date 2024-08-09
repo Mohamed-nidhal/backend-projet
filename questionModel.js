@@ -10,21 +10,11 @@ const questionSchema = new Schema(
     },
     type: {
       type: String,
-      enum: ["text", "number", "email", "long-text", "multiple-choice", "likert"],
-      required: true,
+      enum: ["text", "number", "email", "textArea", "checkbox", "radio"],
     },
     options: [
-      { type: String }
+      {type: String,}
     ],
-    mandatory: {
-      type: Boolean,
-      default: false,
-    },
-    dependentOn: {
-      type: Schema.Types.ObjectId,
-      ref: 'Question',
-      default: null,
-    },
   },
   { timestamps: true }
 );
