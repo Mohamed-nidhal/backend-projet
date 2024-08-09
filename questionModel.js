@@ -1,6 +1,4 @@
-// questionModel.js
-
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 
 const questionSchema = new Schema(
   {
@@ -14,10 +12,12 @@ const questionSchema = new Schema(
       type: String,
       enum: ["text", "number", "email", "textArea", "checkbox", "radio"],
     },
-    options: [String],
-    mandatory: {
+    options: [
+      { type: String }
+    ],
+    mandatory: { // Ajout du champ pour les questions obligatoires
       type: Boolean,
-      default: false,
+      default: false, // Par défaut, une question n'est pas obligatoire
     },
   },
   { timestamps: true }

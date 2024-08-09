@@ -1,5 +1,3 @@
-// questionRoute.js
-
 import express from "express";
 import Question from "./questionModel.js";
 
@@ -12,7 +10,7 @@ router
       const { title, type, options, mandatory } = req.body;
       const question = await Question.create({ title, type, options, mandatory });
       if (!question) {
-        res.status(400).json({ message: "Error creating question" });
+        return res.status(400).json({ message: "Error creating question" });
       }
       res.status(201).json({ data: question });
     } catch (error) {
@@ -23,7 +21,7 @@ router
     try {
       const questions = await Question.find({});
       if (!questions) {
-        res.status(400).json({ message: "No questions found" });
+        return res.status(400).json({ message: "No questions found" });
       }
       res.status(200).json({ data: questions });
     } catch (error) {
