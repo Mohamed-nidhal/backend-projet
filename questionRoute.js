@@ -1,4 +1,3 @@
-// questionRoute.js
 import express from "express";
 import Question from "./questionModel.js";
 
@@ -9,10 +8,15 @@ router
   .post(async (req, res) => {
     try {
       const { title, type, options, mandatory, dependentOn } = req.body;
-      
+
       // Validation des types de question
       if (!["text", "number", "email", "long-text", "multiple-choice", "likert"].includes(type)) {
         return res.status(400).json({ message: "Type de question invalide" });
+      }
+
+      // Validation des options pour les types de question concernés
+      if ((type === "multiple-choice" || type === "likert") && (!options || options.length === 0)) {
+        return res.status(400).json({ message: "Les options sont requises pour ce type de question" });
       }
 
       // Préparation des données de la question
@@ -34,19 +38,17 @@ router
       }
       res.status(201).json({ data: question });
     } catch (error) {
-      console.error(error);
-      res.status(400).json({ message: error.message });
+      console.error("Erreur lors de l'ajout de la question:", error);
+      res.status(500).json({ message: "Erreur serveur lors de la création de la question" });
     }
   })
   .get(async (req, res) => {
     try {
       const questions = await Question.find({});
-      if (!questions) {
-        return res.status(400).json({ message: "Aucune question trouvée" });
-      }
       res.status(200).json({ data: questions });
     } catch (error) {
-      res.status(400).json({ message: error.message });
+      console.error("Erreur lors de la récupération des questions:", error);
+      res.status(500).json({ message: "Erreur serveur lors de la récupération des questions" });
     }
   });
 
