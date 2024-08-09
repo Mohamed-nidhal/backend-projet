@@ -2,10 +2,6 @@ import mongoose, { Schema, Document } from "mongoose";
 
 const questionSchema = new Schema(
   {
-    _id: {
-      type: Number, // Use Number for custom IDs
-      required: true
-    },
     title: {
       type: String,
       required: [true, "Question required"],
@@ -24,7 +20,8 @@ const questionSchema = new Schema(
       default: false,
     },
     dependentOn: {
-      type: Number, // Reference to another question's ID
+      type: Schema.Types.ObjectId, // Reference to another question's ID
+      ref: 'Question', // Refer to the Question model
       default: null, // Default is null, meaning no dependency
     },
   },
