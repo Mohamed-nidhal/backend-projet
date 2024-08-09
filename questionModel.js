@@ -1,33 +1,10 @@
-import mongoose, { Schema, Document } from "mongoose";
+const mongoose = require('mongoose');
 
-const questionSchema = new Schema(
-  {
-    title: {
-      type: String,
-      required: [true, "Question required"],
-      minlength: [3, "Too short question name"],
-      maxlength: [50, "Too long question name"],
-    },
-    type: {
-      type: String,
-      enum: ["text", "number", "email", "textArea", "checkbox", "radio"],
-    },
-    options: [
-      { type: String }
-    ],
-    mandatory: {
-      type: Boolean,
-      default: false,
-    },
-    dependentOn: {
-      type: Schema.Types.ObjectId, // Reference to another question's ID
-      ref: 'Question', // Refer to the Question model
-      default: null, // Default is null, meaning no dependency
-    },
-  },
-  { timestamps: true }
-);
+const questionSchema = new mongoose.Schema({
+  title: { type: String, required: true },
+  type: { type: String, enum: ['text', 'number', 'email', 'long-text', 'multiple-choice', 'likert'], required: true },
+  options: { type: [String], default: [] },
+  mandatory: { type: Boolean, default: false }
+});
 
-const Question = mongoose.model("Question", questionSchema);
-
-export default Question;
+module.exports = mongoose.model('Question', questionSchema);
