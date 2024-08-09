@@ -10,7 +10,8 @@ const questionSchema = new Schema(
     },
     type: {
       type: String,
-      enum: ["text", "number", "email", "textArea", "checkbox", "radio"],
+      enum: ["text", "number", "email", "long-text", "multiple-choice", "likert"],
+      required: true,
     },
     options: [
       { type: String }
@@ -20,9 +21,9 @@ const questionSchema = new Schema(
       default: false,
     },
     dependentOn: {
-      type: Schema.Types.ObjectId, // Reference to another question's ID
-      ref: 'Question', // Refer to the Question model
-      default: null, // Default is null, meaning no dependency
+      type: Schema.Types.ObjectId,
+      ref: 'Question',
+      default: null,
     },
   },
   { timestamps: true }

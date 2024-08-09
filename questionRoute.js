@@ -1,3 +1,4 @@
+// questionRoute.js
 import express from "express";
 import Question from "./questionModel.js";
 
@@ -8,23 +9,32 @@ router
   .post(async (req, res) => {
     try {
       const { title, type, options, mandatory, dependentOn } = req.body;
+      
+      // Validation des types de question
+      if (!["text", "number", "email", "long-text", "multiple-choice", "likert"].includes(type)) {
+        return res.status(400).json({ message: "Type de question invalide" });
+      }
+
+      // Préparation des données de la question
       const questionData = { title, type, options, mandatory };
 
       if (dependentOn) {
-        // Check if the dependent question exists
+        // Vérifier si la question dépendante existe
         const dependentQuestion = await Question.findById(dependentOn);
         if (!dependentQuestion) {
-          return res.status(400).json({ message: "Dependent question not found" });
+          return res.status(400).json({ message: "La question dépendante n'a pas été trouvée" });
         }
         questionData.dependentOn = dependentOn;
       }
 
+      // Création de la question
       const question = await Question.create(questionData);
       if (!question) {
-        return res.status(400).json({ message: "Error creating question" });
+        return res.status(400).json({ message: "Erreur lors de la création de la question" });
       }
       res.status(201).json({ data: question });
     } catch (error) {
+      console.error(error);
       res.status(400).json({ message: error.message });
     }
   })
@@ -32,7 +42,7 @@ router
     try {
       const questions = await Question.find({});
       if (!questions) {
-        return res.status(400).json({ message: "No questions found" });
+        return res.status(400).json({ message: "Aucune question trouvée" });
       }
       res.status(200).json({ data: questions });
     } catch (error) {
