@@ -9,34 +9,32 @@ import answerRoute from "./answerRoute.js";
 dotenv.config();
 const app = express();
 
-// Database connection
+console.log("test");
+console.log(process.env.DB_URI);
+
 dbConnect();
 
-// Middleware
 app.use(cors());
 app.options("*", cors());
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
-app.use("/question", (req, res, next) => {
-  console.log(req.body); // Log incoming request body for debugging
+app.use("/question",(req, res, next)=>{
+  console.log(req.body);
   next();
 }, questionRoute);
-
-app.use("/answer", (req, res, next) => {
-  console.log(req.body); // Log incoming request body for debugging
+app.use("/answer",(req, res, next)=>{
+  console.log(req.body);
   next();
-}, answerRoute);
+},answerRoute);
 
-// Root endpoint
 app.get("/", (req, res) => {
   const name = process.env.NAME || "World";
   res.send(`Hello ${name}!`);
 });
 
-// Server listener
 const port = parseInt(process.env.PORT) || 3000;
 app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+  console.log(`listening on port ${port}`);
 });
