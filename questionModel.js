@@ -25,11 +25,7 @@ const questionSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    dependentOn: {
-      type: Schema.Types.ObjectId,
-      ref: 'Question',
-      default: null,
-    },
+    // Remove dependentOn field
   },
   { timestamps: true }
 );
