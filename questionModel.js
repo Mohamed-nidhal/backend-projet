@@ -1,12 +1,7 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 
 const questionSchema = new Schema(
   {
-    id: {
-      type: Number,
-      required: true,
-      unique: true
-    },
     title: {
       type: String,
       required: [true, "Question required"],
@@ -25,7 +20,11 @@ const questionSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    // Remove dependentOn field
+    dependentOn: {
+      type: Schema.Types.ObjectId,
+      ref: 'Question',
+      default: null,
+    },
   },
   { timestamps: true }
 );
