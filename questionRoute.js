@@ -7,8 +7,19 @@ router
   .route("/")
   .post(async (req, res) => {
     try {
-      const { title, type, options, mandatory } = req.body;
-      const question = await Question.create({ title, type, options, mandatory });
+      const { title, type, options, mandatory, dependentOn } = req.body;
+      const questionData = { title, type, options, mandatory };
+
+      if (dependentOn) {
+        // Check if the dependent question exists
+        const dependentQuestion = await Question.findById(dependentOn);
+        if (!dependentQuestion) {
+          return res.status(400).json({ message: "Dependent question not found" });
+        }
+        questionData.dependentOn = dependentOn;
+      }
+
+      const question = await Question.create(questionData);
       if (!question) {
         return res.status(400).json({ message: "Error creating question" });
       }

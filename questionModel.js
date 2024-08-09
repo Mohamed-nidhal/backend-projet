@@ -15,9 +15,14 @@ const questionSchema = new Schema(
     options: [
       { type: String }
     ],
-    mandatory: { // Ajout du champ pour les questions obligatoires
+    mandatory: {
       type: Boolean,
-      default: false, // Par défaut, une question n'est pas obligatoire
+      default: false,
+    },
+    dependentOn: {
+      type: Schema.Types.ObjectId, // Reference to another question's ID
+      ref: 'Question', // Refer to the Question model
+      default: null, // Default is null, meaning no dependency
     },
   },
   { timestamps: true }
