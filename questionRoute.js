@@ -1,3 +1,4 @@
+import mongoose from 'mongoose';
 import express from "express";
 import Question from "./questionModel.js";
 
@@ -23,6 +24,11 @@ router
       const questionData = { title, type, options, mandatory };
 
       if (dependentOn) {
+        // Vérifier si l'ID de la question dépendante est valide
+        if (!mongoose.Types.ObjectId.isValid(dependentOn)) {
+          return res.status(400).json({ message: "ID de question dépendante invalide" });
+        }
+
         // Vérifier si la question dépendante existe
         const dependentQuestion = await Question.findById(dependentOn);
         if (!dependentQuestion) {
