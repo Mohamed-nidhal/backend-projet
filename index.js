@@ -9,9 +9,6 @@ import answerRoute from "./answerRoute.js";
 dotenv.config();
 const app = express();
 
-console.log("test");
-console.log(process.env.DB_URI);
-
 dbConnect();
 
 app.use(cors());
@@ -24,6 +21,7 @@ app.use("/question", (req, res, next) => {
   console.log(req.body);
   next();
 }, questionRoute);
+
 app.use("/answer", (req, res, next) => {
   console.log(req.body);
   next();
@@ -36,5 +34,5 @@ app.get("/", (req, res) => {
 
 const port = parseInt(process.env.PORT) || 3000;
 app.listen(port, () => {
-  console.log(`listening on port ${port}`);
+  console.log(`Listening on port ${port}`);
 });

@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 
 const questionSchema = new Schema(
   {
@@ -18,6 +18,11 @@ const questionSchema = new Schema(
     mandatory: {
       type: Boolean,
       default: false,
+    },
+    dependentOn: {
+      type: Schema.Types.ObjectId, // Reference to another question's ID
+      ref: 'Question', // Refer to the Question model
+      default: null, // Default is null, meaning no dependency
     },
   },
   { timestamps: true }
